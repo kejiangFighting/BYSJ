@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+/*公共样式*/
+.main_body{ min-width:320px; }
+.layui-elem-quote.title{ padding:10px 15px; margin-bottom:0; }
+.layui-tab-more{ position: relative; z-index: 99; background:#fff; }
+.layui-layer-tab .layui-layer-title span.layui-layer-tabnow{ height:42px !important; }
+.layui-layer-tab .layui-layer-title span{ min-width:45px !important; }
+
+.sysNotice{ width:50%; float: left; }
+.sysNotice .layui-elem-quote{ line-height:26px; position: relative;}
+.sysNotice .layui-table{ margin-top:0; border-left:5px solid #e2e2e2; }
+.sysNotice .title .icon-new1{ position: absolute; top:8px; margin-left: 10px; color:#f00; font-size:25px; }
