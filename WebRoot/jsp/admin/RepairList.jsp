@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>管理员学生信息管理</title>
+    <title>报修情况</title>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -26,66 +26,69 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<blockquote class="layui-elem-quote news_search">
 		<div class="layui-inline">
 		    <div class="layui-input-inline">
-		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
+		    	<input type="text" value=""  class="layui-input search_input">
 		    </div>
 		    <a class="layui-btn search_btn">查询</a>
 		</div>
+		
+		<div class="layui-inline">
 	</blockquote>
 	<div class="layui-form links_list">
 	  	<table class="layui-table">
-		    <colgroup>
+	  	  <colgroup>
 				<col width="50">
+				<col width="100">
 				<col>
 				<col>
-				<col>
-				<col>
+				<col width="300">
 				<col>
 				<col width="13%">
 		    </colgroup>
 		    <thead>
 				<tr>
-					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th style="text-align:left;">学号</th>
-					<th>姓名</th>
-					<th>专业</th>
-					<th>实习公司</th>
-					<th>密码</th>
+					
+					<th>报修人员</th>
+					<th>报修设备</th>
+					<th>报修描述</th>	
+					<th>报修时间</th>
+					<th>报修状态</th>
 					<th>操作</th>
 				</tr> 
 		    </thead>
 		    <tbody class="links_content">
-		   			<%
-							StuDaoImpl stu=new StuDaoImpl();
-							List<Student> stulist=stu.findAll();
-							if(stulist.size()>0){
-								for(Student s:stulist){
-									%>
+		    			<%	
+		    				EquipDaoImpl equ=new EquipDaoImpl();
+		    				List<Repair> reList=equ.findRepairAll();
+						
+							if(reList.size()>0){
+								for(Repair c:reList){
+						%>
 									<tr>
-										<td>
-											<input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose">
-										</td>
+										
 									<%
-										out.println("<td>"+ s.getStuNo() +"</td>");
-										out.println("<td>"+ s.getName() +"</td>");
-										out.println("<td>"+ s.getMajor() +"</td>");
-										out.println("<td>"+ s.getComNo() +"</td>");
-										out.println("<td>"+ s.getPassword() +"</td>");	
+										out.println("<td>"+ c.getUserID()+"</td>");
+										out.println("<td>"+ c.getEquipID() +"</td>");
+										out.println("<td>"+ c.getDescribe() +"</td>");	
+										out.println("<td>"+ c.getTime() +"</td>");
+										out.println("<td>"+ c.getStatus() +"</td>");	
 									%>
 										<td>
-											<a class="layui-btn layui-btn-mini links_edit"  href='jsp/common/updateStu.jsp?stuid=<%=s.getStuNo() %>'>
-												<i class="iconfont icon-edit"></i> 编辑
+											<a class="layui-btn layui-btn-mini links_edit"  href='update?repairID=<%=c.getEquipID() %>'>
+												<i class="iconfont icon-edit"></i> 设备修复
 											</a>
-											<a class="layui-btn layui-btn-danger layui-btn-mini links_del" href='DeleteUserServlet?stuid=<%=s.getStuNo() %>'>
-												<i class="layui-icon">&#xe640;</i> 删除
+											<a class="layui-btn layui-btn-danger layui-btn-mini links_del" href='DeleteUserServlet?repairID=<%=c.getEquipID() %>'>
+												<i class="layui-icon">&#xe640;</i> 删除记录
 											</a>
 										</td>
 									</tr>
 								<% }} %>
-
+		   			
 		    </tbody>
 		</table>
 	</div>
 	<div id="page"></div>
 	<script type="text/javascript" src="layui/layui.js"></script>
+	<script type="text/javascript" src="js/NoticeList.js"></script>
+	
 </body>
 </html>

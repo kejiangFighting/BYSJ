@@ -124,7 +124,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</a>
 							</dd>
 							<dd>
-								<a href="javascript:;" data-url="jsp/common/NeverReadMsgList.jsp?userno=<%=session.getAttribute("student")  %>">
+								<a href="javascript:;" data-url="jsp/common/BookList.jsp?userno=<%=session.getAttribute("student")  %>">
 									<i class="layui-icon" data-icon=""></i>
 									<cite>书籍资料管理</cite>
 								</a>

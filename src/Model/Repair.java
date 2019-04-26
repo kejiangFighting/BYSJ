@@ -7,6 +7,7 @@ public class Repair {
 	private String EquipID;
 	private String Time;
 	private String Describe;
+	private String Status;
     public Repair() {
 		// TODO Auto-generated constructor stub
 	}
@@ -17,6 +18,16 @@ public class Repair {
     	this.EquipID=EquipID;
     	this.Time=Time;
     	this.UserID=UserID;
+        
+      
+	}
+    public Repair(String UserID, String EquipID, String Time,
+			String Describe,String status) {
+    	this.Describe=Describe;
+    	this.EquipID=EquipID;
+    	this.Time=Time;
+    	this.UserID=UserID;
+    	this.Status=status;
         
       
 	}
@@ -43,6 +54,14 @@ public class Repair {
 	}
 	public void setDescribe(String describe) {
 		Describe = describe;
+	}
+
+	public String getStatus() {
+		return Status;
+	}
+
+	public void setStatus(String status) {
+		Status = status;
 	}
 	
 }

@@ -152,6 +152,87 @@ public class AddServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		//添加书籍资料
+		if(request.getParameter("AddBook")!=null)
+		{
+			System.out.println("添加书籍资料");
+			String bookID=new String(request.getParameter("bookID").getBytes());
+			String name=new String(request.getParameter("name").getBytes());
+			String type=new String(request.getParameter("type").getBytes());
+			String number=new String(request.getParameter("num").getBytes());    
+			int num=Integer.parseInt(number);
+			String time=new String(request.getParameter("time").getBytes());
+			String introdu=new String(request.getParameter("introdu").getBytes());
+			
+			Book book=new Book();
+			book.setBookID(bookID);
+			book.setIntrodu(introdu);
+			book.setName(name);
+			book.setNum(num);
+			book.setTime(time);
+			book.setType(type);
+
+			
+			int IsSuccess;
+			AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+			
+		//	NoticeDaoImpl notice=new NoticeDaoImpl();
+			try {
+				
+				IsSuccess=admDaoImpl.addBook(book);
+				if(IsSuccess==1)
+				{
+					out.println("<script> alert('资料登记成功');</script>");
+					request.getRequestDispatcher("jsp/admin/BookList.jsp").forward(request,response);
+				}
+				else{
+					out.println("<script> alert('登记失败，请检查是否重复添加！');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(request.getParameter("AddEquip")!=null)
+		{
+			System.out.println("添加设备");
+			System.out.println("修改了啊");
+			String equipID=new String(request.getParameter("equipID").getBytes());
+			String name=new String(request.getParameter("name").getBytes());
+			String manufacturer=new String(request.getParameter("manufacture").getBytes());
+			String type=new String(request.getParameter("type").getBytes());
+			String status=new String(request.getParameter("status").getBytes());
+			String specification=new String(request.getParameter("specification").getBytes());
+			Equip n=new Equip();
+			n.setEquipID(equipID);
+			n.setManufacturer(manufacturer);
+			n.setName(name);
+			n.setSpecification(specification);
+			n.setType(type);
+			n.setStatus(status);
+			
+			int IsSuccess;
+			EquipDaoImpl equipDaoImpl=new EquipDaoImpl();
+			
+			try {
+				
+				IsSuccess=equipDaoImpl.addEquip(n);
+				if(IsSuccess==1)
+				{
+					out.println("<script> alert('添加成功');</script>");
+					out.println("<script> history.go(-1);</script>");
+					//request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
+				}
+				else{
+					out.println("<script> alert('请不要重复添加！');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if(request.getParameter("AddRepair")!=null)
 		{
 			System.out.println("添加报修信息");

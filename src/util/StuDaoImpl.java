@@ -19,16 +19,16 @@ public class StuDaoImpl implements StuDao{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			//1-2��ȡ���Ӷ���
+	
 			conn = ConnectionFactory.getConn();
 			String sql = "select * from stu_tb where StuNo=? and Password=?";
-			//3 Ԥ����sql
+		
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,stuNo);
 			pstmt.setString(2, psw);
-			//4.ִ��sql
+		
 			rs = pstmt.executeQuery();
-			//5.��������
+			
 			while(rs.next()){
 				String StuNo = rs.getString("StuNo");
 				String stupsw = rs.getString("Password");

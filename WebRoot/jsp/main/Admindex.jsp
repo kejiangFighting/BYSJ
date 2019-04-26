@@ -120,23 +120,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</li>
 					<li class="layui-nav-item">
 						<a href="javascript:;">
-							<i class="layui-icon" data-icon=""></i>
-							<cite>研究室设备管理</cite>
+							<i class="layui-icon" data-icon=""></i>
+							<cite>研究室资源管理</cite>
 							<span class="layui-nav-more"></span>
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;" data-url="jsp/admin/StuManage.jsp">
+								<a href="javascript:;" data-url="jsp/admin/Report.jsp?fromno=<%=session.getAttribute("admin") %>">
 									<i class="layui-icon" data-icon=""></i>
-									<cite>报修处理</cite>
+									<cite>研究室设备管理</cite>
 								</a>
 							</dd>
 							<dd>
-								<a href="javascript:;" data-url="jsp/admin/TeaManage.jsp">
+								<a href="javascript:;" data-url="jsp/admin/BookList.jsp?userno=<%=session.getAttribute("admin")  %>">
 									<i class="layui-icon" data-icon=""></i>
-									<cite>设备管理</cite>
+									<cite>书刊资料管理</cite>
 								</a>
 							</dd>
+							<dd>
+								<a href="javascript:;" data-url="jsp/admin/RepairList.jsp?userno=<%=session.getAttribute("admin")  %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>报修管理</cite>
+								</a>
+							</dd>
+							
 						</dl>
 					</li>
 					<li class="layui-nav-item">

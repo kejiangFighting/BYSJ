@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>设备管理</title>
+    <title>书籍资料登记管理</title>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -67,10 +67,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<%
 	//获取总记录数
-	ResultSet rs = statement.executeQuery("select count(*) from equip_tb" ); 
+	ResultSet rs = statement.executeQuery("select count(*) from Book_tb" ); 
 	rs.next(); 
 	RecordCount = rs.getInt(1); 
-	rs = statement.executeQuery("SELECT* FROM equip_tb  ORDER BY EquipID DESC LIMIT "+StartRow+", "+PageSize);
+	rs = statement.executeQuery("SELECT* FROM Book_tb  ORDER BY BookID DESC LIMIT "+StartRow+", "+PageSize);
 	//获取总页数
 	MaxPage = RecordCount % PageSize;
 	if(RecordCount % PageSize == 0){
@@ -86,10 +86,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <div class="layui-inline">
         <input class="layui-input" name="search" id="demoReload" autocomplete="off">
     	</div>
-    	<button class="layui-btn" name="searchEquip" data-type="reload">搜索</button>
+    	<button class="layui-btn" name="minsearchBook" data-type="reload">搜索</button>
 		</div>
+		<div class="layui-inline">
           </form>
     </div>
+   
 	</blockquote>
 
 	<div class="layui-form links_list">
@@ -105,12 +107,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <thead>
 				<tr>
 					 <th>序号</th>
-	    <th>设备编号</th>
-	    <th>设备名称</th>
-	    <th>生产厂商</th>
-	    <th>设备类型</th>
-	    <th>设备状态</th>
-	    <th>操作</th>
+	
+	    <th>书刊名</th>
+	    <th>出版日期</th>
+	  
+	    <th>书刊类型</th>
+	    <th>数量</th>
+	     <th>操作</th>
+	
 				</tr> 
 		    </thead>
 		    <tbody class="links_content">
@@ -122,21 +126,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<tr>
 	<td><%=bil %></td>
-	<td><%=rs.getString("EquipID")%></td>
+	
 	<td><%=rs.getString("Name") %></td>	
-	<td><%=rs.getString("Manufacturer")%></td>
+	<td><%=rs.getString("Time")%></td>
+	
 	<td><%=rs.getString("Type") %></td>
-	<td><%=rs.getString("Status") %></td>
+	<td><%=rs.getString("Num") %></td>
 	<td>
-	<a class="layui-btn layui-btn-mini links_edit" href='jsp/common/EquipIndex.jsp?equipID=<%=rs.getString("EquipID")%>'>
-												<i class="iconfont icon-edit"></i> 查看
+	<a class="layui-btn layui-btn-mini links_edit" href='jsp/common/seeBook.jsp?bookID=<%=rs.getString("BookID")%>'>
+												<i class="iconfont icon-edit"></i> 查看详情
 											</a> 
-											<a class="layui-btn layui-btn-danger layui-btn-mini links_del" href='jsp/common/Repair.jsp?equipID=<%=rs.getString("EquipID")%>'>
-												<i class="layui-icon">&#xe642;</i> 报修
-											</a>
+										
 	</td>
-   
-						<%
+	<%
 	i++;
 	}%>
 	
@@ -153,8 +155,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	//如果当前页不是第1页，则显示第一页和前一页的链接
 	if(PageNo != 1){
 	PrevStart = PageNo - 1;
-	out.print("<a href=jsp/common/Report.jsp?PageNo=1>第一页 </a>: ");
-	out.print("<a href=jsp/common/Report.jsp?PageNo="+PrevStart+">前一页</a>");
+	out.print("<a href=jsp/common/BookList.jsp?PageNo=1>第一页 </a>: ");
+	out.print("<a href=jsp/common/BookList.jsp?PageNo="+PrevStart+">前一页</a>");
 	}
 	out.print("[");
 	//打印需要显示的页码
@@ -167,16 +169,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	out.print(c+" ,");
 	}
 	}else if(c % PageSize == 0){
-	out.print("<a href=jsp/common/Report.jsp?PageNo="+c+">"+c+"</a>");
+	out.print("<a href=jsp/common/BookList.jsp?PageNo="+c+">"+c+"</a>");
 	}else{
-	out.print("<a href=jsp/common/Report.jsp?PageNo="+c+">"+c+"</a> ,");
+	out.print("<a href=jsp/common/BookList.jsp?PageNo="+c+">"+c+"</a> ,");
 	}
 	}else{
 	if(PageNo == MaxPage){
 	out.print(c);
 	break;
 	}else{
-	out.print("<a href=jsp/common/Report.jsp?PageNo="+c+">"+c+"</a>");
+	out.print("<a href=jsp/common/BookList.jsp?PageNo="+c+">"+c+"</a>");
 	break;
 
 	}
@@ -185,7 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	out.print("]");;
 	if(PageNo < MaxPage){ //如果当前页不是最后一页，则显示下一页链接
 	NextPage = PageNo + 1;
-	out.print("<a href=jsp/common/Report.jsp?PageNo="+NextPage+">下一页</a>");
+	out.print("<a href=jsp/common/BookList.jsp?PageNo="+NextPage+">下一页</a>");
 	}
 	//同时如果当前页不是最后一页，要显示最后一页的链接
 	if(PageNo < MaxPage){
@@ -197,7 +199,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	LastStartRecord = RecordCount - LastRec;
 	}
 	out.print(":");
-	out.print("<a href=jsp/common/Report.jsp?PageNo="+MaxPage+">最后一页</a>");
+	out.print("<a href=jsp/common/BookList.jsp?PageNo="+MaxPage+">最后一页</a>");
 	}
 	out.print("</font>");
 	%>

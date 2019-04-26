@@ -116,6 +116,80 @@ public class DeleteUserServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		if(request.getParameter("equipID")!=null)
+		{	
+			EquipDaoImpl equipDaoImpl=new EquipDaoImpl();
+			
+		
+			String EquipID=new String(request.getParameter("equipID").getBytes());
+			try{
+				
+				int isSuccess=equipDaoImpl.deleteEqById(EquipID);
+				if (isSuccess>0)
+				{
+					out.println("<script> alert('删除成功');</script>");
+					request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
+				}
+				else
+				{
+
+					out.println("<script> alert('删除失败');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(request.getParameter("bookID")!=null)
+		{	
+			AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+			
+			
+		
+			String bookID=new String(request.getParameter("bookID").getBytes());
+			try{
+				
+				int isSuccess=admDaoImpl.deleteBook(bookID);
+				if (isSuccess>0)
+				{
+					//out.println("<script> alert('删除成功');</script>");
+					out.println("<script> alert('删除成功');window.location.href='jsp/admin/BookList.jsp'</script>");
+					//request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
+				}
+				else
+				{
+
+					out.println("<script> alert('删除失败');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(request.getParameter("repairID")!=null)
+		{	
+			EquipDaoImpl equipDaoImpl=new EquipDaoImpl();
+			
+		
+			String EquipID=new String(request.getParameter("repairID").getBytes());
+			try{
+				
+				int isSuccess=equipDaoImpl.deleteRepairById(EquipID);
+				if (isSuccess>0)
+				{
+					out.println("<script> alert('删除成功');</script>");
+					request.getRequestDispatcher("jsp/admin/RepairList.jsp").forward(request,response);
+				}
+				else
+				{
+
+					out.println("<script> alert('删除失败');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		if(request.getParameter("comid")!=null)
 		{	
 			ComDaoImpl com=new ComDaoImpl();

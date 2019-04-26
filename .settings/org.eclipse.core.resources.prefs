@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/conn/ConnectionFactory.java=GBK
 encoding//src/servlet/LoginServlet.java=UTF-8
+encoding//src/servlet/SearchServlet.java=GBK
 encoding//src/servlet/SigninServlet.java=UTF-8
 encoding//src/servlet/updateServlet.java=GBK
 encoding//src/util/ComDaoImpl.java=GBK

@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>管理员学生信息管理</title>
+    <title></title>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -24,68 +24,78 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
 <body class="childrenBody">
 	<blockquote class="layui-elem-quote news_search">
-		<div class="layui-inline">
-		    <div class="layui-input-inline">
-		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
-		    </div>
-		    <a class="layui-btn search_btn">查询</a>
+			<form class="layui-form" action="Search" method="post">
+		 <div class="layui-inline">
+        <input class="layui-input" name="search" id="demoReload" autocomplete="off">
+    	</div>
+    	<button class="layui-btn" name="searchBook" data-type="reload">搜索</button>
 		</div>
+		<div class="layui-inline">
+			<a class="layui-btn noticeAdd_btn" style="background-color:#5FB878" href="jsp/admin/BookAdd.jsp">添加登记资料</a>
+		</div>
+		<div class="layui-inline">
+          </form>
 	</blockquote>
 	<div class="layui-form links_list">
 	  	<table class="layui-table">
-		    <colgroup>
+		     <colgroup>
 				<col width="50">
+				<col width="100">
 				<col>
-				<col>
+				<col width="300">
 				<col>
 				<col>
 				<col>
 				<col width="13%">
 		    </colgroup>
 		    <thead>
-				<tr>
-					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th style="text-align:left;">学号</th>
-					<th>姓名</th>
-					<th>专业</th>
-					<th>实习公司</th>
-					<th>密码</th>
+				<tr>					
+					<th>书刊名</th>
+					<th>出版日期</th>
+					<th>书刊类型</th>
+					
+					<th>数量</th>
+						
 					<th>操作</th>
 				</tr> 
 		    </thead>
-		    <tbody class="links_content">
-		   			<%
-							StuDaoImpl stu=new StuDaoImpl();
-							List<Student> stulist=stu.findAll();
-							if(stulist.size()>0){
-								for(Student s:stulist){
+		    <tbody class="links_content">		   		
+						<%	
+						response.setContentType("text/html;charset=utf-8");
+ 						request.setCharacterEncoding("utf-8");
+						String seach =request.getParameter("search");
+							//NoticeDaoImpl notice=new NoticeDaoImpl();
+							AdmDaoImpl ad=new AdmDaoImpl();								
+							List<Book>	books=	ad.findAll(seach);
+							if(books.size()>0){
+								for(Book n:books){
 									%>
 									<tr>
-										<td>
-											<input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose">
-										</td>
 									<%
-										out.println("<td>"+ s.getStuNo() +"</td>");
-										out.println("<td>"+ s.getName() +"</td>");
-										out.println("<td>"+ s.getMajor() +"</td>");
-										out.println("<td>"+ s.getComNo() +"</td>");
-										out.println("<td>"+ s.getPassword() +"</td>");	
+										
+										out.println("<td>"+ n.getName() +"</td>");
+										out.println("<td>"+ n.getTime()+"</td>");
+										out.println("<td>"+ n.getType()+"</td>");
+										
+										out.println("<td>"+ n.getNum()+"</td>");
+											
 									%>
 										<td>
-											<a class="layui-btn layui-btn-mini links_edit"  href='jsp/common/updateStu.jsp?stuid=<%=s.getStuNo() %>'>
-												<i class="iconfont icon-edit"></i> 编辑
-											</a>
-											<a class="layui-btn layui-btn-danger layui-btn-mini links_del" href='DeleteUserServlet?stuid=<%=s.getStuNo() %>'>
-												<i class="layui-icon">&#xe640;</i> 删除
-											</a>
+											<a class="layui-btn layui-btn-mini links_edit" href='jsp/common/seeBook.jsp?bookID=<%=n.getBookID()%>'>
+												<i class="iconfont icon-edit"></i> 查看详情
+											</a> 
+	
 										</td>
 									</tr>
-								<% }} %>
+								<% }} %>				
+								
+									<tr>
 
 		    </tbody>
 		</table>
 	</div>
 	<div id="page"></div>
 	<script type="text/javascript" src="layui/layui.js"></script>
+	
 </body>
 </html>

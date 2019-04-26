@@ -1,8 +1,8 @@
 package servlet;
 
-import java.awt.AWTError;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,13 +16,13 @@ import Model.*;
 import util.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = "/update", name = "update")
-public class updateServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/Search", name = "Search")
+public class SearchServlet extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public updateServlet() {
+	public SearchServlet() {
 		super();
 	}
 
@@ -48,12 +48,18 @@ public class updateServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("text/html");
-		request.setCharacterEncoding("utf-8");
-		
-		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-	
-		doPost(request, response);
+		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
+		out.println("<HTML>");
+		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
+		out.println("  <BODY>");
+		out.print("    This is ");
+		out.print(this.getClass());
+		out.println(", using the GET method");
+		out.println("  </BODY>");
+		out.println("</HTML>");
+		out.flush();
+		out.close();
 	}
 
 	/**
@@ -135,33 +141,75 @@ public class updateServlet extends HttpServlet {
 //				}
 //			}
 //		}
-//		
-		//修改学生信息
-		if(request.getParameter("updateStu")!=null)
+//		//搜索书刊
+		if(request.getParameter("searchBook")!=null)
 		{	
-			StuDaoImpl stu=new StuDaoImpl();
-			String stuno=new String(request.getParameter("stuno").getBytes());
-			String name=request.getParameter("name");
-			String major=request.getParameter("major");
-			String comno=new String(request.getParameter("comno").getBytes());
-			String psw=new String(request.getParameter("stupsw").getBytes());
-			Student s=new Student();
-			s.setStuNo(stuno);
-			s.setName(name);
-			s.setMajor(major);
-			s.setComNo(comno);
-			s.setPassword(psw);
+			AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+			
+			String search=new String(request.getParameter("search").getBytes());
+			
+		
 			try{
-				int isSuccess=stu.updateById(s);
-				if (isSuccess>0)
+				
+				List<Book> isSuccess=admDaoImpl.findAll(search);
+				if (isSuccess==null)
 				{
-					out.println("<script> alert('修改成功');</script>");
+					out.println("<script> alert('查无此信息');</script>");
 					out.println("<script> history.go(-1);</script>");
 				}
 				else
+				{	
+					request.getRequestDispatcher("jsp/admin/SearchBook.jsp").forward(request,response);
+
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//搜索书刊（普通人员）
+				if(request.getParameter("minsearchBook")!=null)
+				{	
+					AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+					
+					String search=new String(request.getParameter("search").getBytes());
+					
+				
+					try{
+						
+						List<Book> isSuccess=admDaoImpl.findAll(search);
+						if (isSuccess==null)
+						{
+							out.println("<script> alert('查无此信息');</script>");
+							out.println("<script> history.go(-1);</script>");
+						}
+						else
+						{	
+							request.getRequestDispatcher("jsp/common/SearchBook.jsp").forward(request,response);
+
+						}
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+		//搜索设备
+		if(request.getParameter("searchEquip")!=null)
+		{	
+			EquipDaoImpl equip=new EquipDaoImpl();
+			
+			String search=new String(request.getParameter("search").getBytes());
+			
+		
+			try{
+				Equip isSuccess=equip.findEquip(search);
+				if (isSuccess==null)
 				{
-					out.println("<script> alert('修改失败');</script>");
+					out.println("<script> alert('查无此信息');</script>");
 					out.println("<script> history.go(-1);</script>");
+				}
+				else
+				{	
+					request.getRequestDispatcher("jsp/common/SearchEquip.jsp").forward(request,response);
+
 				}
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -188,7 +236,7 @@ public class updateServlet extends HttpServlet {
 			t.setPassword(psw);
 			try {
 				check=tea.findById(teano);
-				//若没修改tuandui
+				//若没修改实习公司
 				if (check.getComNo().equals(comno))
 				{
 					teaSuccess=tea.updateById(t);
@@ -204,7 +252,7 @@ public class updateServlet extends HttpServlet {
 						out.println("<script> history.go(-1);</script>");
 					}
 				}
-				//修改了研究团队
+				//修改了实习公司
 				else
 				{
 					Company c=com.findById(comno);		
@@ -294,7 +342,7 @@ public class updateServlet extends HttpServlet {
 				if (isSuccess>0)
 				{
 					out.println("<script> alert('修改成功');</script>");
-					request.getRequestDispatcher("jsp/admin/NoticeList.jsp").forward(request,response);
+					request.getRequestDispatcher("../jsp/admin/NoticeList.jsp").forward(request,response);
 				}
 				else
 				{
@@ -306,123 +354,6 @@ public class updateServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		//修改设备
-		if(request.getParameter("updateEquip")!=null)
-		{	
-			EquipDaoImpl equipDaoImpl=new EquipDaoImpl();
-			
-		
-			String equipID=new String(request.getParameter("equipID").getBytes());
-			String name=new String(request.getParameter("name").getBytes());
-			String manufacturer=new String(request.getParameter("manufacture").getBytes());
-			String type=new String(request.getParameter("type").getBytes());
-			String status=new String(request.getParameter("status").getBytes());
-			String specification=new String(request.getParameter("specification").getBytes());
-			Equip n=new Equip();
-			n.setEquipID(equipID);
-			n.setManufacturer(manufacturer);
-			n.setName(name);
-			n.setSpecification(specification);
-			n.setType(type);
-			n.setStatus(status);			
-			try{
-				int isSuccess=equipDaoImpl.updateById(n);
-				if (isSuccess>0)
-				{
-					out.println("<script> alert('修改成功');</script>");
-					request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
-				}
-				else
-				{
-
-					out.println("<script> alert('修改失败');</script>");
-					out.println("<script> history.go(-1);</script>");
-				}
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		//修改图书
-				if(request.getParameter("updateBook")!=null)
-				{	
-					AdmDaoImpl admDaoImpl=new AdmDaoImpl();
-					String bookID=new String(request.getParameter("bookID").getBytes());
-					System.out.println(bookID);
-					String name=new String(request.getParameter("name").getBytes());
-					String time=new String(request.getParameter("time").getBytes());
-					String type=new String(request.getParameter("type").getBytes());
-					String numb=new String(request.getParameter("num").getBytes());
-					int num=Integer.parseInt(numb);
-					String introdu=new String(request.getParameter("introdu").getBytes());
-					Book b=new Book();
-					b.setBookID(bookID);
-					b.setIntrodu(introdu);
-					b.setName(name);
-					b.setNum(num);
-					b.setType(type);
-					b.setTime(time);
-					try{
-						int isSuccess=admDaoImpl.updateBook(b);
-						if (isSuccess>0)
-						{
-							out.println("<script> alert('修改成功');window.location.href='jsp/admin/BookList.jsp'</script>");
-							 // out.write("<Script Language=\"JavaScript\">alert(\"success!\");window.location.href=\"jsp/admin/updateBook.jsp\";</Script>");
-							//request.getRequestDispatcher("jsp/admin/updateBook.jsp").forward(request,response);
-						}
-						else
-						{
-
-							out.println("<script> alert('修改失败');</script>");
-							out.println("<script> history.go(-1);</script>");
-						}
-					}catch (Exception e) {
-						e.printStackTrace();
-					}
-				}		
-		//报修设备修复
-		if(request.getParameter("repairID")!=null)
-		{	
-			EquipDaoImpl equipDaoImpl=new EquipDaoImpl();
-			Equip aEquip=new Equip();
-	
-			String EquipID=new String(request.getParameter("repairID").getBytes());
-			System.out.println("repairIDdsad:"+EquipID);
-			Repair repair=new Repair();
-			repair.setEquipID(EquipID);
-			repair.setStatus("已修复");
-			aEquip.setStatus("正常");
-			aEquip.setEquipID(EquipID);
-			try{
-				int isSuccess=equipDaoImpl.updateRepairById(repair);
-				System.out.println(isSuccess);
-				
-				int k=equipDaoImpl.changeStatus(aEquip);
-				if (isSuccess>0 )
-				{	
-					System.out.println("k:"+k);
-					out.println("<script> alert('修改成功');</script>");
-					//out.println("<script> history.go(-1);</script>");
-					request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
-					//return;
-				}
-				else
-				{
-
-					out.println("<script> alert('修改失败');</script>");
-					out.println("<script> history.go(-1);</script>");
-				}
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		
-		if(request.getParameter("SelectScoreByMajor")!=null)
-		{
-
-			String Major=new String(request.getParameter("major").getBytes());
-			System.out.println(Major);
-		}		 
 		//修改公司信息
 		if(request.getParameter("updateCom")!=null)
 		{	

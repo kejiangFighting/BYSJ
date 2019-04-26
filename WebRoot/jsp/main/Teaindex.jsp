@@ -72,10 +72,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;" data-url="jsp/teacher/ScoreList.jsp?teano=<%=session.getAttribute("teacher")  %>">
+						<a href="javascript:;">
 							<i class="layui-icon" data-icon=""></i>
-							<cite>成绩管理</cite>
+							<cite>研究室资源管理</cite>
+							<span class="layui-nav-more"></span>
 						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" data-url="jsp/common/Report.jsp?userno=<%=session.getAttribute("teacher") %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>研究室设备管理</cite>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" data-url="jsp/common/BookList.jsp?userno=<%=session.getAttribute("teacher")  %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>书籍资料管理</cite>
+								</a>
+							</dd>
+							
+						</dl>
 					</li>
 					<li class="layui-nav-item">
 						<a href="javascript:;" data-url="jsp/teacher/ReportList.jsp?teano=<%=session.getAttribute("teacher")  %>">
