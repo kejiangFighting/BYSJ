@@ -5,7 +5,7 @@ import Model.Company;
 import Model.Message;
 import Model.Notes;
 import Model.UserAdd;
-import Model.report;
+import Model.Report;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -300,7 +300,7 @@ public class TeacherDAO {
 			e.printStackTrace();
 			}
 	}
-	public void InputScore(Connection con, report report)throws SQLException {
+	public void InputScore(Connection con, Report report)throws SQLException {
 		// TODO Auto-generated method stub
 		Statement stmt = null;
         Dbutil dbutil = new Dbutil();

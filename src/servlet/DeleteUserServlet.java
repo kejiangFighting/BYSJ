@@ -166,6 +166,60 @@ public class DeleteUserServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		//删除文件
+//		if(request.getParameter("EbookID")!=null)
+//		{	
+//			AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+//			
+//			
+//		
+//			String bookID=new String(request.getParameter("bookID").getBytes());
+//			try{
+//				
+//				int isSuccess=admDaoImpl.deleteBook(bookID);
+//				if (isSuccess>0)
+//				{
+//					//out.println("<script> alert('删除成功');</script>");
+//					out.println("<script> alert('删除成功');window.location.href='jsp/admin/BookList.jsp'</script>");
+//					//request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
+//				}
+//				else
+//				{
+//
+//					out.println("<script> alert('删除失败');</script>");
+//					out.println("<script> history.go(-1);</script>");
+//				}
+//			}catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+		//取消预约
+		if(request.getParameter("MeetingID")!=null)
+		{	
+			AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+			
+			
+		
+			String ID=new String(request.getParameter("MeetingID").getBytes());
+			try{
+				
+				int isSuccess=admDaoImpl.deleteMeeting(ID);
+				if (isSuccess>0)
+				{
+					//out.println("<script> alert('删除成功');</script>");
+					out.println("<script> alert('取消成功');window.location.href='jsp/common/MeetingList.jsp'</script>");
+					//request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
+				}
+				else
+				{
+
+					out.println("<script> alert('取消失败');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		if(request.getParameter("repairID")!=null)
 		{	
 			EquipDaoImpl equipDaoImpl=new EquipDaoImpl();

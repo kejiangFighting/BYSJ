@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
  <body class="childrenBody">
-	<form class="layui-form changePwd" action="cyy1500330201.service/updateServlet?teano=<%=new String(request.getParameter("teano").getBytes())  %>" method="post">
+	<form class="layui-form changePwd" action="updateServlet?teano=<%=new String(request.getParameter("teano").getBytes())  %>" method="post">
 		<div class="layui-form-item">
 		    <label class="layui-form-label">用户名</label>
 		    <div class="layui-input-block">

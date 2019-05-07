@@ -2,12 +2,17 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.mail.imap.protocol.Status;
 
 import Model.*;
 
@@ -152,6 +157,131 @@ public class AddServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		//查询是否有预约
+		if(request.getParameter("chekTime")!=null){
+			System.out.println("查询预约");
+			int chek;
+			String startTime=new String(request.getParameter("startTime").getBytes());
+			String time=new String(request.getParameter("time").getBytes());
+			String endTime=new String(request.getParameter("endTime").getBytes());
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+	          System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+	         String nowdate =df.format(new Date());
+	         AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+	         Meeting m=new Meeting();
+	         m.setTime(time);
+	         try {
+			      if (time.compareTo(nowdate)>=0) {
+			    	  System.out.println("tongguo");
+			    	  List<Meeting> meetList=admDaoImpl.checkMeeting(m);//获取预约当天的预约数据链表
+			    	  chek=admDaoImpl.chekMeet(meetList,startTime,endTime);
+			    	  //System.out.println("链表:"+meetList.get(0).getStartTime());
+			    	  if (chek==0) {
+			    		  out.println("<script> alert('查询时间冲突，请重新选择！');</script>"); 
+		    			  out.println("<script> history.go(-1);</script>");
+						
+					} else {
+						
+						 out.println("<script> alert('当前时间段可以预约！')</script>");
+						 out.println("<script> history.go(-1);</script>");
+						
+					}
+
+					} else {
+					out.println("<script> alert('请选择今天或之后时间段！');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}	
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+			
+		}
+		//添加预约会议室
+		if(request.getParameter("AddMeeting")!=null)
+		{
+			System.out.println("添加预约");
+			String userID=new String(request.getParameter("userno").getBytes());
+			String title=new String(request.getParameter("title").getBytes());
+			String names=new String(request.getParameter("names").getBytes());
+			String startTime=new String(request.getParameter("startTime").getBytes());
+			String time=new String(request.getParameter("time").getBytes());
+			String endTime=new String(request.getParameter("endTime").getBytes());
+			String nu=new String(request.getParameter("num").getBytes());
+			int num=Integer.parseInt(nu);
+			String phone=new String(request.getParameter("phone").getBytes());
+			//String equips=new String(request.getParameter("equips").getBytes());
+			String[] equip=request.getParameterValues("equips");
+			String equips = "";
+			for(int i=0;i<equip.length;i++)
+				equips+=equip[i]+",";
+			//System.out.println(delStr);
+			System.out.println("设备："+equips);
+			String status="已审批";
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+	          System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+	         String nowdate =df.format(new Date());
+			Meeting m=new Meeting();
+			m.setEndTime(endTime);
+			m.setEquip(equips);
+			m.setNames(names);
+			m.setNum(num);
+			m.setPhone(phone); 
+			m.setStartTime(startTime);
+			m.setTitle(title);
+			m.setUserID(userID);
+			m.setTime(time);
+			m.setStatus(status);
+			int chek;
+			
+			AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+			try {
+				//chek=admDaoImpl.checkMeeting(m);
+				//IsSuccess=admDaoImpl.addMeeing(m);
+		      if (time.compareTo(nowdate)>=0) {
+		    	  System.out.println("tongguo");
+		    	  List<Meeting> meetList=admDaoImpl.checkMeeting(m);//获取预约当天的预约数据链表
+		    	  chek=admDaoImpl.chekMeet(meetList,startTime,endTime);
+		    	  //System.out.println("链表:"+meetList.get(0).getStartTime());
+		    	  if (chek==0) {
+		    		  out.println("<script> alert('预约时间冲突，请重新选择！');</script>"); 
+	    			  out.println("<script> history.go(-1);</script>");
+					
+				} else {
+					admDaoImpl.addMeeing(m);
+					 out.println("<script> alert('预约成功');window.location.href='jsp/common/Meeting.jsp'</script>");
+					
+				}
+//		    	  for (int i = 0;i<meetList.size(); i++) {
+//		    		  if(startTime.compareTo(meetList.get(i).getEndTime())<=0&&endTime.compareTo(meetList.get(i).getStartTime())>=0){
+//		    			  System.out.println("时间冲突");
+//		    			  out.println("<script> alert('预约时间冲突，请重新选择！');</script>"); 
+//		    			  out.println("<script> history.go(-1);</script>");
+//		    		  }else {
+//		    			  System.out.println("不冲突");
+//		    			  IsSuccess=admDaoImpl.addMeeing(m);
+//			    		  if(IsSuccess==1)
+//							{	
+//							  out.println("<script> alert('预约成功');window.location.href='jsp/common/Meeting.jsp'</script>");
+//								//out.println("<script> alert('预约成功成功');</script>");
+//								//request.getRequestDispatcher("jsp/common/Meeting.jsp").forward(request,response);
+//							}
+//							else{
+//								out.println("<script> alert('预约失败');</script>");
+//								out.println("<script> history.go(-1);</script>");
+//							}
+//					}
+//				} 	
+				} else {
+				out.println("<script> alert('请选择今天或之后时间段！');</script>");
+				out.println("<script> history.go(-1);</script>");
+			}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
 		//添加书籍资料
 		if(request.getParameter("AddBook")!=null)
 		{
@@ -226,6 +356,89 @@ public class AddServlet extends HttpServlet {
 				}
 				else{
 					out.println("<script> alert('请不要重复添加！');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//添加任务
+		if(request.getParameter("AddTask")!=null)
+		{
+			System.out.println("添加任务");
+			
+			String FromNo=new String(request.getParameter("FromNo").getBytes());
+			String name=new String(request.getParameter("name").getBytes());
+			String ToNo=new String(request.getParameter("tono").getBytes());
+			String neirong=new String(request.getParameter("neirong").getBytes());
+			SimpleDateFormat simpleDateFormat = new java.text.SimpleDateFormat(    
+				     "yyyy-MM-dd HH:mm:ss");    
+		   Date currentTime = new Date();    
+		   String time = simpleDateFormat.format(currentTime).toString(); 
+		    
+		    Task t=new Task();
+		    t.setFromNo(FromNo);
+		    t.setName(name);
+		    t.setNeirong(neirong);
+		    t.setTime(time);
+		    t.setToNo(ToNo);
+
+			int IsSuccess;
+			TeaDaoImpl teaDaoImpl=new TeaDaoImpl();
+			try {
+				
+				IsSuccess=teaDaoImpl.addTask(t);
+				if(IsSuccess==1)
+				{
+					
+					 out.println("<script> alert('分配成功');window.location.href='jsp/teacher/Task.jsp'</script>");
+					//request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
+				}
+				else{
+					out.println("<script> alert('发送失败');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//添加报告
+		if(request.getParameter("AddReport")!=null)
+		{
+			System.out.println("添加报告");
+
+			String teano=new String(request.getParameter("teano").getBytes());
+			String name=new String(request.getParameter("name").getBytes());
+			String StuNo=new String(request.getParameter("stuno").getBytes());
+			String Time=new String(request.getParameter("time").getBytes());
+			String neirong=new String(request.getParameter("neirong").getBytes());
+//			SimpleDateFormat simpleDateFormat = new java.text.SimpleDateFormat(    
+//				     "yyyy-MM-dd HH:mm:ss");    
+//		   Date currentTime = new Date();    
+//		   String time = simpleDateFormat.format(currentTime).toString(); 
+		    Report r=new Report();
+		    r.setName(name);
+		    r.setNeirong(neirong);
+		    r.setStuNo(StuNo);
+		    r.setTeaNO(teano);
+		    r.setTime(Time);
+
+			int IsSuccess;
+			StuDaoImpl stuDaoImpl=new StuDaoImpl();
+			//TeaDaoImpl teaDaoImpl=new TeaDaoImpl();
+			try {
+				
+				IsSuccess=stuDaoImpl.addReport(r);
+				if(IsSuccess==1)
+				{
+					
+					out.println("<script> alert('上传成功');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+				else{
+					out.println("<script> alert('上传失败');</script>");
 					out.println("<script> history.go(-1);</script>");
 				}
 			} catch (Exception e) {

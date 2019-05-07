@@ -148,6 +148,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</li>
 					<li class="layui-nav-item">
 						<a href="javascript:;">
+							<i class="layui-icon" data-icon=""></i>
+							<cite>电子资源管理</cite>
+							<span class="layui-nav-more"></span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" data-url="jsp/common/yingyong_add.jsp?fromno=<%=session.getAttribute("admin") %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>添加</cite>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" data-url="jsp/common/yingyong_list.jsp?userno=<%=session.getAttribute("admin")  %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>查看</cite> 
+								</a>
+							</dd>
+							
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="layui-icon" data-icon=""></i>
+							<cite>会议室预约管理</cite>
+							<span class="layui-nav-more"></span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" data-url="jsp/admin/MeetingList.jsp?userno=<%=session.getAttribute("admin") %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>预约查看</cite>
+								</a>
+							</dd>		
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">
 							<i class="layui-icon" data-icon=""></i>
 							<cite>用户信息管理</cite>
 							<span class="layui-nav-more"></span>

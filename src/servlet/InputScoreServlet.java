@@ -3,7 +3,7 @@ package servlet;
 
 import Dao.Dbutil;
 import Dao.TeacherDAO;
-import Model.report;
+import Model.Report;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,7 +41,7 @@ public class InputScoreServlet extends HttpServlet{
         float  b =Float.parseFloat(proportion);
         float Z=P*b+K*(1-b);
         String gradeZ=Float.toString(Z);
-        report report = new report();
+        Report report = new Report();
         Connection con = null;
        report.setGradeP(gradeP);
        report.setGradeK(gradeK);

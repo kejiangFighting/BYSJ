@@ -328,14 +328,68 @@ public class updateServlet extends HttpServlet {
 			try{
 				int isSuccess=equipDaoImpl.updateById(n);
 				if (isSuccess>0)
-				{
-					out.println("<script> alert('修改成功');</script>");
-					request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
+				{	
+					out.println("<script> alert('修改成功');window.location.href='jsp/admin/Report.jsp'</script>");
+					//out.println("<script> alert('修改成功');</script>");
+					//request.getRequestDispatcher("jsp/admin/Report.jsp").forward(request,response);
 				}
 				else
 				{
 
 					out.println("<script> alert('修改失败');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//取消审批
+		if(request.getParameter("MeetingID")!=null)
+		{	
+			AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+			String ID=new String(request.getParameter("MeetingID").getBytes());
+			
+			String status="拒绝";
+			System.out.println("取消审批");
+			System.out.println(ID);
+			try{
+				int isSuccess=admDaoImpl.UpdateMeet(ID,status);
+				if (isSuccess>0)
+				{
+					out.println("<script> alert('取消成功');window.location.href='jsp/admin/MeetingList.jsp'</script>");
+					 // out.write("<Script Language=\"JavaScript\">alert(\"success!\");window.location.href=\"jsp/admin/updateBook.jsp\";</Script>");
+					//request.getRequestDispatcher("jsp/admin/updateBook.jsp").forward(request,response);
+				}
+				else
+				{
+
+					out.println("<script> alert('取消失败');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//点评报告
+		if(request.getParameter("updatePingyu")!=null)
+		{	
+			TeaDaoImpl teaDaoImpl=new TeaDaoImpl();
+			String pingyu=new String(request.getParameter("pingyu").getBytes());
+			
+			String neirong=new String(request.getParameter("name").getBytes());
+			System.out.println("点评："+neirong+pingyu);
+			try{
+				int isSuccess=teaDaoImpl.UpdateReport(pingyu,neirong);
+				if (isSuccess>0)
+				{
+					out.println("<script> alert('点评成功');window.location.href='jsp/teacher/ReportList.jsp'</script>");
+					 // out.write("<Script Language=\"JavaScript\">alert(\"success!\");window.location.href=\"jsp/admin/updateBook.jsp\";</Script>");
+					//request.getRequestDispatcher("jsp/admin/updateBook.jsp").forward(request,response);
+				}
+				else
+				{
+
+					out.println("<script> alert('点评失败');</script>");
 					out.println("<script> history.go(-1);</script>");
 				}
 			}catch (Exception e) {
@@ -378,7 +432,32 @@ public class updateServlet extends HttpServlet {
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
-				}		
+				}	
+				//修改任务完成状态
+				if(request.getParameter("TaskID")!=null)
+				{	
+					
+					
+					StuDaoImpl stu=new StuDaoImpl();
+					
+					String id=new String(request.getParameter("TaskID").getBytes());
+					
+					try{
+						int isSuccess=stu.updateTask(id);
+						if (isSuccess>0)
+						{	
+							out.println("<script> alert('修改成功');window.location.href='jsp/student/seeTask.jsp'</script>");
+							
+						}
+						else
+						{
+							out.println("<script> alert('修改失败');</script>");
+							out.println("<script> history.go(-1);</script>");
+						}
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 		//报修设备修复
 		if(request.getParameter("repairID")!=null)
 		{	

@@ -83,64 +83,7 @@ public class SearchServlet extends HttpServlet {
 		out.println("<HTML>");
 		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
 		out.println("  <BODY>");
-//		if(request.getParameter("SingleEnterScore")!=null)
-//		{
-//			System.out.println("单个录入或更新成绩表");
-//			ScoreDaoImpl score=new ScoreDaoImpl();
-//			Float pscore;
-//			Float tscore;
-//			Score s;
-//			String stuno=new String(request.getParameter("StuNo").getBytes());
-//			String p_score=new String(request.getParameter("pscore").getBytes());
-//			String t_score=new String(request.getParameter("tscore").getBytes());
-//			pscore=Float.parseFloat(p_score);
-//			tscore=Float.parseFloat(t_score);
-//			try {
-//				s = score.findById(stuno);
-//				if(s==null)
-//				{
-//					score.addScore(stuno, pscore, tscore);
-//				}
-//				else
-//				{
-//					score.updateById(stuno, pscore, tscore);
-//				}
-//			} catch (Exception e1) {
-//				e1.printStackTrace();
-//			}
-//		}
-//		if(request.getParameter("EnterScore")!=null)
-//		{
-//			System.out.println("集体录入过更新成绩表");
-//			ScoreDaoImpl score=new ScoreDaoImpl();
-//			String[] stulist=request.getParameterValues("StuNo");
-//			String[] plist=request.getParameterValues("pscore");
-//			String[] tlist=request.getParameterValues("tscore");
-//			String stuno;
-//			Float pscore;
-//			Float tscore;
-//			if(stulist!=null&&stulist.length>0) {
-//				for(int i= 0 ;i<stulist.length;i++){
-//					stuno=stulist[i];
-//					pscore=Float.parseFloat(plist[i]);
-//					tscore=Float.parseFloat(tlist[i]);
-//					Score s;
-//					try {
-//						s = score.findById(stuno);
-//						if(s==null)
-//						{
-//							score.addScore(stuno, pscore, tscore);
-//						}
-//						else
-//						{
-//							score.updateById(stuno, pscore, tscore);
-//						}
-//					} catch (Exception e1) {
-//						e1.printStackTrace();
-//					}
-//				}
-//			}
-//		}
+
 //		//搜索书刊
 		if(request.getParameter("searchBook")!=null)
 		{	
@@ -167,30 +110,30 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 		//搜索书刊（普通人员）
-				if(request.getParameter("minsearchBook")!=null)
-				{	
-					AdmDaoImpl admDaoImpl=new AdmDaoImpl();
-					
-					String search=new String(request.getParameter("search").getBytes());
-					
+		if(request.getParameter("minsearchBook")!=null)
+		{	
+			AdmDaoImpl admDaoImpl=new AdmDaoImpl();
+			
+			String search=new String(request.getParameter("search").getBytes());
+			
+		
+			try{
 				
-					try{
-						
-						List<Book> isSuccess=admDaoImpl.findAll(search);
-						if (isSuccess==null)
-						{
-							out.println("<script> alert('查无此信息');</script>");
-							out.println("<script> history.go(-1);</script>");
-						}
-						else
-						{	
-							request.getRequestDispatcher("jsp/common/SearchBook.jsp").forward(request,response);
-
-						}
-					}catch (Exception e) {
-						e.printStackTrace();
-					}
+				List<Book> isSuccess=admDaoImpl.findAll(search);
+				if (isSuccess==null)
+				{
+					out.println("<script> alert('查无此信息');</script>");
+					out.println("<script> history.go(-1);</script>");
 				}
+				else
+				{	
+					request.getRequestDispatcher("jsp/common/SearchBook.jsp").forward(request,response);
+
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		//搜索设备
 		if(request.getParameter("searchEquip")!=null)
 		{	
@@ -209,6 +152,30 @@ public class SearchServlet extends HttpServlet {
 				else
 				{	
 					request.getRequestDispatcher("jsp/common/SearchEquip.jsp").forward(request,response);
+
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//搜索设备（管理員）
+		if(request.getParameter("AdminsearchEquip")!=null)
+		{	
+			EquipDaoImpl equip=new EquipDaoImpl();
+			
+			String search=new String(request.getParameter("search").getBytes());
+			
+		
+			try{
+				Equip isSuccess=equip.findEquip(search);
+				if (isSuccess==null)
+				{
+					out.println("<script> alert('查无此信息');</script>");
+					out.println("<script> history.go(-1);</script>");
+				}
+				else
+				{	
+					request.getRequestDispatcher("jsp/admin/SearchEquip.jsp").forward(request,response);
 
 				}
 			}catch (Exception e) {

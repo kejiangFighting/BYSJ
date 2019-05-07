@@ -8,5 +8,6 @@
 
 .sysNotice{ width:50%; float: left; }
 .sysNotice .layui-elem-quote{ line-height:26px; position: relative;}
+.sysNotice .layui-btn{float: right;}
 .sysNotice .layui-table{ margin-top:0; border-left:5px solid #e2e2e2; }
 .sysNotice .title .icon-new1{ position: absolute; top:8px; margin-left: 10px; color:#f00; font-size:25px; }

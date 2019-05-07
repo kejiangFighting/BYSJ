@@ -2,7 +2,7 @@ package Dao;
 import Model.Message;
 import Model.User;
 import Model.UserAdd;
-import Model.report;
+import Model.Report;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -242,7 +242,7 @@ public class StudentDAO {
 			e.printStackTrace();
 		}
 	}
-	public void Reportadd(Connection con, report report)throws SQLException {
+	public void Reportadd(Connection con, Report report)throws SQLException {
 		// TODO Auto-generated method stub
 		PreparedStatement pst = null;
 

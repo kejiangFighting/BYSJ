@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<li class="layui-nav-item">
 						<a href="javascript:;" data-url="jsp/teacher/TeaComList.jsp?teano=<%=session.getAttribute("teacher")  %>">
 							<i class="iconfont icon-text" data-icon="icon-text"></i>
-							<cite>实习公司管理</cite>
+							<cite>研究团队管理</cite>
 						</a>
 					</li>
 					<li class="layui-nav-item">
@@ -88,6 +88,72 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<a href="javascript:;" data-url="jsp/common/BookList.jsp?userno=<%=session.getAttribute("teacher")  %>">
 									<i class="layui-icon" data-icon=""></i>
 									<cite>书籍资料管理</cite>
+								</a>
+							</dd>
+							
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="layui-icon" data-icon=""></i>
+							<cite>日常学习管理</cite>
+							<span class="layui-nav-more"></span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" data-url="jsp/teacher/Task.jsp?userno=<%=session.getAttribute("teacher") %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>任务分配</cite>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" data-url="jsp/teacher/ReportList.jsp?userno=<%=session.getAttribute("teacher")  %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>查看报告</cite>
+								</a>
+							</dd>
+							
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="layui-icon" data-icon=""></i>
+							<cite>会议室预约管理</cite>
+							<span class="layui-nav-more"></span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" data-url="jsp/common/Meeting.jsp?userno=<%=session.getAttribute("teacher") %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>会议室预约</cite>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" data-url="jsp/common/MeetingList.jsp?userno=<%=session.getAttribute("teacher")  %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>我的预约</cite>
+								</a>
+							</dd>
+							
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="layui-icon" data-icon=""></i>
+							<cite>电子资源管理</cite>
+							<span class="layui-nav-more"></span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" data-url="jsp/common/yingyong_add.jsp?fromno=<%=session.getAttribute("teacher") %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>添加</cite>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" data-url="jsp/common/yingyong_list.jsp?userno=<%=session.getAttribute("teacher")  %>">
+									<i class="layui-icon" data-icon=""></i>
+									<cite>查看</cite> 
 								</a>
 							</dd>
 							

@@ -2,7 +2,7 @@ package servlet;
 
 import Dao.Dbutil;
 import Dao.StudentDAO;
-import Model.report;
+import Model.Report;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +36,7 @@ public class WreportServlet extends HttpServlet{
         String time = new String(req.getParameter("time").getBytes("ISO-8859-1"), "UTF-8");
         String teacher = new String(req.getParameter("teacher").getBytes("ISO-8859-1"), "UTF-8");
         String summary = new String(req.getParameter("summary").getBytes("ISO-8859-1"), "UTF-8");
-        report report=new report();
+        Report report=new Report();
         report.setDepartment(department);
         report.setGradeK(gradeK);
         report.setTel(tel);

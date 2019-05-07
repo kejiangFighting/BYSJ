@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="container">
                 	<div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <p style="font-size:2em;">高等学校学生生产实习管理系统</p>
+                            <p style="font-size:2em;">研究室资源管理系统</p>
                         </div>
                     </div>
                     <div class="row">

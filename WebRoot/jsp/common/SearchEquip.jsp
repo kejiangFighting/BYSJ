@@ -35,13 +35,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="layui-form links_list">
 	  	<table class="layui-table">
 		     <colgroup>
-				<col width="50">
-				<col width="100">
+				<col width="150">
+				<col width="150">
 				<col>
-				<col width="300">
+				<col width="150">
 				<col>
-				<col>
-				<col>
+				
 				<col width="13%">
 		    </colgroup>
 		    <thead>

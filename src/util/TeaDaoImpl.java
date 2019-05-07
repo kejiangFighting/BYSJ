@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dao.TeaDao;
+import Model.Task;
 import Model.Teacher;
 import conn.ConnectionFactory;
 
@@ -275,6 +276,55 @@ public class TeaDaoImpl implements TeaDao{
 			ConnectionFactory.close(rs, pstmt, conn);
 		}
 		return hasCom;
+	}
+
+	public int addTask(Task t) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String status="未完成";
+		try {
+			//1-2获取链接对象
+			conn = ConnectionFactory.getConn();
+			String sql = "insert into Task_tb(Name,FromNo,ToNo,Neirong,Time,Status) values(?,?,?,?,?,?)";
+			pstmt=conn.prepareStatement(sql);
+			//3 预处理sql
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,t.getName());
+			pstmt.setString(2, t.getFromNo());
+			pstmt.setString(3, t.getToNo());
+			pstmt.setString(4, t.getNeirong());
+			pstmt.setString(5, t.getTime());
+			pstmt.setString(6, status);
+			//4.执行sql
+			pstmt.executeUpdate();
+			return 1;
+		} catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return 0;
+	}
+
+	public int UpdateReport(String pingyu, String neirong) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			//1-2获取链接对象
+			conn = ConnectionFactory.getConn();
+			String sql = "update Report_tb set Pingyu= ? where NeiRong= ?";
+			pstmt=conn.prepareStatement(sql);
+			//3 预处理sql
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pingyu);
+			pstmt.setString(2, neirong);
+			//4.执行sql
+			pstmt.executeUpdate();
+			return 1;
+		} catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return 0;
 	}
 
 

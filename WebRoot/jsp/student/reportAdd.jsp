@@ -2,6 +2,7 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -26,9 +27,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
  <body class="childrenBody">
- 	
-	<form class="layui-form"  action="AddServlet?stuno=<%=new String(request.getParameter("stuno").getBytes())  %>" method="post" >
+ 	<blockquote class="layui-elem-quote news_search">
+	填写报告
+	</blockquote>
+	<form class="layui-form"  action="AddServlet?stuno=<%=session.getAttribute("student")%>&teano=<%=request.getParameter("teano") %> " method="post" >
 		
+		<div class="layui-form-item">			
+			<div class="layui-inline">		
+				<label class="layui-form-label">主题</label>
+				<div class="layui-input-inline">
+					<input type="text" name="name" value="<%=request.getParameter("TaskName")%>"class="layui-input "">
+				</div>
+			</div>
 		<div class="layui-form-item">			
 			<div class="layui-inline">		
 				<label class="layui-form-label">时间</label>
@@ -40,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="layui-form-item">
 			<label class="layui-form-label">报告内容</label>
 			<div class="layui-input-block">
-				<textarea class="layui-textarea layui-hide content" name="content" lay-verify="content" id="news_content"></textarea>
+				<textarea class="layui-textarea layui-hide content" name="neirong" lay-verify="content" id="news_content"></textarea>
 			</div>
 		</div>
 		<div class="layui-form-item">

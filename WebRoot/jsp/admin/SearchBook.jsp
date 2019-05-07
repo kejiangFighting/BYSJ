@@ -28,22 +28,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <div class="layui-inline">
         <input class="layui-input" name="search" id="demoReload" autocomplete="off">
     	</div>
-    	<button class="layui-btn" name="searchBook" data-type="reload">搜索</button>
+    	<button class="layui-btn" name="AdminsearchBook" data-type="reload">搜索</button>
 		</div>
-	
+		<div class="layui-inline">
+			<a class="layui-btn noticeAdd_btn" style="background-color:#5FB878" href="jsp/admin/BookAdd.jsp">添加登记资料</a>
+		</div>
+		
           </form>
 	</blockquote>
 	<div class="layui-form links_list">
 	  	<table class="layui-table">
 		     <colgroup>
-				<col width="50">
 				<col width="100">
-				<col>
-				<col width="300">
-				<col>
-				<col>
-				<col>
-				<col width="13%">
+				<col width="150">
+				<col  width="150">
+				<col width="100">
+				<col  >
+				<col  width="50">
+				
+				<col width="150">
 		    </colgroup>
 		    <thead>
 				<tr>

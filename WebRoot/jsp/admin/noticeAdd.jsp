@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			laydate = layui.laydate,
 			$ = layui.jquery;
 	
-		//鍒涘缓涓�釜缂栬緫鍣� 	
+	
 		var editIndex = layedit.build('news_content');
 	
 })

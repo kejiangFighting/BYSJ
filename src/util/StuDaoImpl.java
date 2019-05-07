@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dao.StuDao;
+import Model.Report;
 import Model.Student;
 import conn.ConnectionFactory;
 
@@ -90,6 +91,34 @@ public class StuDaoImpl implements StuDao{
 		}
 		return list;
 	}
+	//²éÕÒÍÅ¶Ó³ÉÔ±
+	public List<Student> findAll(String ComNo) throws Exception {
+		List<Student> list = new ArrayList<Student>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionFactory.getConn();
+			String sql = "select * from stu_tb where ComNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,ComNo);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				String stuno = rs.getString("StuNo");
+				String stuname = rs.getString("Name");
+				String  stumajor= rs.getString("Major");
+				String stupsw = rs.getString("Password");
+				String comno = rs.getString("ComNo");
+				Student student=new Student(stuno, stuname,stumajor , stupsw,comno);
+				list.add(student);
+			}
+		} finally {
+			ConnectionFactory.close(rs, pstmt, conn);
+		}
+		return list;
+	}
+
 
 	public int deleteById(String stuno) throws Exception {
 		Connection conn = null;
@@ -107,36 +136,6 @@ public class StuDaoImpl implements StuDao{
 		return rs;
 	}
 
-//	public Score findscoreById(String stuno) throws Exception {
-//		Score grade = null;
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		try {
-//			//1-2ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½
-//			conn = ConnectionFactory.getConn();
-//			String sql = "select * from score_tb where StuNo=?";
-//			//3 Ô¤ï¿½ï¿½ï¿½ï¿½sql
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1,stuno);
-//			//4.Ö´ï¿½ï¿½sql
-//			rs = pstmt.executeQuery();
-//			//5.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//			while(rs.next()){
-//				String StuNo = rs.getString("StuNo");
-//				Float pscore = Float.parseFloat(rs.getString("p_score"));
-//				Float tscore = Float.parseFloat(rs.getString("t_score"));
-//				Float score = Float.parseFloat(rs.getString("score"));
-//				grade=new Score(StuNo, pscore,tscore,score);
-//			}
-//		} catch(Exception e){
-//			System.out.println(e.toString());
-//		}
-//		finally {
-//			ConnectionFactory.close(rs, pstmt, conn);
-//		}
-//		return grade;
-//	}
 
 	public Student findById(String stuNo) throws Exception {
 		Student stu = null;
@@ -144,15 +143,15 @@ public class StuDaoImpl implements StuDao{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			//1-2ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½
+	
 			conn = ConnectionFactory.getConn();
 			String sql = "select * from stu_tb where StuNo=?";
-			//3 Ô¤ï¿½ï¿½ï¿½ï¿½sql
+	
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,stuNo);
-			//4.Ö´ï¿½ï¿½sql
+	
 			rs = pstmt.executeQuery();
-			//5.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	
 			while(rs.next()){
 				String stuno = rs.getString("StuNo");
 				String name = rs.getString("Name");
@@ -174,18 +173,16 @@ public class StuDaoImpl implements StuDao{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			//1-2ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½
+		
 			conn = ConnectionFactory.getConn();
 			String sql = "update stu_tb set Name= ? ,Major= ?,Password= ?,ComNo= ? where StuNo= ?";
 			pstmt=conn.prepareStatement(sql);
-			//3 Ô¤ï¿½ï¿½ï¿½ï¿½sql
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, s.getName());
 			pstmt.setString(2, s.getMajor());
 			pstmt.setString(3, s.getPassword());
 			pstmt.setString(4,s.getComNo());
 			pstmt.setString(5, s.getStuNo());
-			//4.Ö´ï¿½ï¿½sql
 			pstmt.executeUpdate();
 			return 1;
 		} catch(Exception e){
@@ -322,5 +319,85 @@ public class StuDaoImpl implements StuDao{
 			ConnectionFactory.close(rs, pstmt, conn);
 		}
 		return list;
+	}
+
+	public int updateTask(String id) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String status="Íê³É";
+		try {
+		
+			conn = ConnectionFactory.getConn();
+			String sql = "update Task_tb set Status= ?  where ID= ?";
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1,status);
+			pstmt.setString(2, id);
+			
+			pstmt.executeUpdate();
+			return 1;
+		} catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return 0;
+	}
+
+	public int addReport(Report r) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			
+			conn = ConnectionFactory.getConn();
+			String sql = "insert into Report_tb(StuNo,Name,TeaNo,NeiRong,Time) values(?,?,?,?,?)";
+			pstmt=conn.prepareStatement(sql);
+	
+		
+			pstmt.setString(1,r.getStuNo());
+			pstmt.setString(2, r.getName());
+			pstmt.setString(3, r.getTeaNO());
+			pstmt.setString(4, r.getNeirong());
+			pstmt.setString(5, r.getTime());
+			pstmt.executeUpdate();
+			return 1;
+		} catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return 0;
+	}
+	//²éÕÒ±¨¸æ
+	public Report findReport(String id) throws Exception {
+		Report report=null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+	
+			conn = ConnectionFactory.getConn();
+			String sql = "select * from Report_tb where ID=?";
+	
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,id);
+	
+			rs = pstmt.executeQuery();
+	
+			while(rs.next()){
+				String stuno = rs.getString("StuNo");
+				String name = rs.getString("Name");
+				String teano = rs.getString("TeaNo");
+				String time = rs.getString("Time");
+				String pingyu = rs.getString("Pingyu");
+				String neirong = rs.getString("NeiRong");
+				report=new Report(name, teano, stuno, time, neirong, pingyu);
+	
+			}
+		} catch(Exception e){
+			System.out.println(e.toString());
+		}
+		finally {
+			ConnectionFactory.close(rs, pstmt, conn);
+		}
+		return report;
 	}
 }

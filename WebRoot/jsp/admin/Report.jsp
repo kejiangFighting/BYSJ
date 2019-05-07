@@ -86,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <div class="layui-inline">
         <input class="layui-input" name="search" id="demoReload" autocomplete="off">
     	</div>
-    	<button class="layui-btn" name="searchEquip" data-type="reload">搜索</button>
+    	<button class="layui-btn" name="AdminsearchEquip" data-type="reload">搜索</button>
 		</div>
 		<div class="layui-inline">
 			<a class="layui-btn noticeAdd_btn" style="background-color:#5FB878" href="jsp/admin/equipAdd.jsp">添加设备</a>
